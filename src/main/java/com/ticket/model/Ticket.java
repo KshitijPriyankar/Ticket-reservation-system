@@ -26,6 +26,31 @@ public class Ticket {
     public void cancel() {
         status = "CANCELLED";
     }
+    public boolean isActive() {
+        return status.equals("BOOKED");
+    }
+    public String getTicketDetails() {
+        return "Ticket ID: " + ticketId +
+               ", Passenger: " + passenger.getName() +
+               ", Train: " + train.getTrainNumber() +
+               ", Seat: " + seatNumber +
+               ", Status: " + status;
+    }
+    public double refundAmount() {
+        if (status.equals("CANCELLED")) {
+            return 400.0;
+        }
+        return 0.0;
+    }
+    public int getTicketId() {
+        return ticketId;
+    }
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+    public String getStatus() {
+        return status;
+    }
     public void printTicket() {
         System.out.println("\n========== TICKET ==========");
         System.out.println("Ticket ID   : " + ticketId);

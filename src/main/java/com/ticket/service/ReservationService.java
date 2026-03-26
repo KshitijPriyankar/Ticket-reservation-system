@@ -1,9 +1,7 @@
 package com.ticket.service;
 import com.ticket.model.*;
 import com.ticket.database.RailwayDatabase;
-
 import java.util.*;
-
 public class ReservationService {
     private RailwayDatabase db = new RailwayDatabase();
     private List<Ticket> tickets = new ArrayList<>();
@@ -13,7 +11,6 @@ public class ReservationService {
                                " Seats: " + t.getAvailableSeats());
         }
     }
-    
     public Ticket bookTicket(Passenger p, int trainNumber) {
         Train t = db.findTrain(trainNumber);
         if (t == null || t.getAvailableSeats() == 0) {
@@ -27,12 +24,16 @@ public class ReservationService {
         tickets.add(ticket);
         System.out.println("Ticket booked successfully");
         ticket.printTicket();
+        System.out.println(ticket.getTicketDetails());
+
         return ticket;
     }
-   
     public void cancelTicket(Ticket ticket) {
         ticket.cancel();
         System.out.println("Ticket cancelled");
         ticket.printTicket();
+        if (!ticket.isActive()) {
+            System.out.println("Refund: " + ticket.refundAmount());
+        }
     }
 }
