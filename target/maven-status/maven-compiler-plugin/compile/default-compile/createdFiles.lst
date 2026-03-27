@@ -1,7 +1,0 @@
-com\ticket\database\RailwayDatabase.class
-com\ticket\model\Train.class
-com\ticket\main\Main.class
-com\ticket\model\Ticket.class
-com\ticket\model\Passenger.class
-com\ticket\service\ReservationService.class
-com\ticket\model\Payment.class
