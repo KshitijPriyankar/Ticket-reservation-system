@@ -4,11 +4,14 @@ pipeline {
         maven 'Maven3'
         jdk 'JDK25'
     }
+    environment {
+        IMAGE_NAME = 'ticket-system'
+    }
     stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/KshitijPriyankar/Ticket-reservation-system.git'
+                    url: 'https://github.com/KshitijPriyankar/Ticket-reservation-system.git'
             }
         }
         stage('Build') {
@@ -20,19 +23,34 @@ pipeline {
             steps {
                 bat 'mvn test'
             }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
         }
         stage('Package') {
             steps {
                 bat 'mvn package'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t %IMAGE_NAME% -f DockerFile .'
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                bat 'docker run -it --rm %IMAGE_NAME%'
+            }
+        }
     }
     post {
         success {
-            echo 'Build Successful'
+            echo 'Pipeline executed successfully!'
         }
         failure {
-            echo 'Build Failed'
+            echo 'Pipeline failed!'
         }
     }
 }
