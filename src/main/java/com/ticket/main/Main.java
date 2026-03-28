@@ -8,6 +8,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ReservationService service = new ReservationService();
+         if (System.console() == null) {
+            System.out.println("Running in non-interactive mode (CI/CD)");
+
+            Passenger p = new Passenger(1, "AutoUser", 25);
+            service.bookTicket(p, 12591);
+
+            return;
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Name:");
         String name = sc.nextLine();
